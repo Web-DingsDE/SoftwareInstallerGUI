@@ -2,8 +2,7 @@
 
 
 $InstallPath = ""
-#$workdir = "\\DOMSRV01\install\$env:UserName"
-$InstallPathBRZclient = "\\Filesrv01\brz32"
+$InstallPathBRZclient = ""
 
 $LogWindowTitel = "ClientInstaller"
 
