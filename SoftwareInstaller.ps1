@@ -1,4 +1,4 @@
-##### Individualanpassungen
+﻿##### Individualanpassungen
 
 
 $InstallPath = "\\Filesrv01\install"
@@ -28,9 +28,6 @@ function Sources{
 
     Set-Variable -Name sourceTeamViewerQS -Value "https://download.teamviewer.com/download/TeamViewerQS.exe" -Scope global
     Set-Variable -Name destinationTeamViewerQS -Value "$path\TeamViewerQS.exe" -Scope global
-
-    Set-Variable -Name sourceFirefox -Value "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=de" -Scope global
-    Set-Variable -Name destinationFirefox -Value "$path\Firefox.exe" -Scope global
 
     Set-Variable -Name source7z -Value "http://www.7-zip.org/a/7z1604-x64.msi" -Scope global
     Set-Variable -Name destination7z -Value "$path\7z.msi" -Scope global
@@ -133,17 +130,17 @@ $CheckBoxRenameComputer.height      = $CheckBoxHeight
 $CheckBoxRenameComputer.Font        = $GlobalFont
 
 
-###Firefox 
-$CheckBoxFirefox             = New-Object system.Windows.Forms.CheckBox
+###JavaRuntime 
+#$CheckBoxJavaRuntime             = New-Object system.Windows.Forms.CheckBox
 ##edit
-$CheckBoxFirefox.text        = "Firefox"
-$CheckBoxFirefox.location    = New-Object System.Drawing.Point($CheckBoxVertical,125)
+#$CheckBoxJavaRuntime.text        = "JavaRuntime"
+#$CheckBoxJavaRuntime.location    = New-Object System.Drawing.Point($CheckBoxVertical,125)
 ##notedit
-$CheckBoxFirefox.AutoSize    = $true
-$CheckBoxFirefox.Checked     = $true
-$CheckBoxFirefox.width       = $CheckBoxWidth
-$CheckBoxFirefox.height      = $CheckBoxHeight
-$CheckBoxFirefox.Font        = $GlobalFont
+#$CheckBoxJavaRuntime.AutoSize    = $true
+#$CheckBoxJavaRuntime.Checked     = $false
+#$CheckBoxJavaRuntime.width       = $CheckBoxWidth
+#$CheckBoxJavaRuntime.height      = $CheckBoxHeight
+#$CheckBoxJavaRuntime.Font        = $GlobalFont
 
 
 
@@ -352,7 +349,7 @@ function DownloadTeamViewerQS{
     }
     Complete-BitsTransfer -BitsJob $JobDownloadTeamViewerQS
                                 #Invoke-WebRequest $sourceTeamViewerQS -OutFile $destinationTeamViewerQS
-    
+    Start-Sleep -Seconds 1
 
         If (Test-Path -Path $destinationTeamViewerQS){
                 #Invoke-WebRequest $sourceTeamViewerQS -OutFile $destinationTeamViewerQS
@@ -370,41 +367,6 @@ function DownloadTeamViewerQS{
 
 
 }
-
-function DownloadFirefox {
-
-    # Download the installer
-        If (Test-Path -Path $destinationFirefox){ 
-        Write-Host "$destinationFirefox exists" -ForegroundColor Green
-        $LogWindow.text += "$(timestamp):   $destinationFirefox inst vorhanden. `r`n"
-        }
-        ELSE{ 
-    
-        # Download the installer
-        $JobDownloadFirefox = Start-BitsTransfer -Source $sourceFirefox -Destination $destinationFirefox -Asynchronous
-        $LogWindow.text += "$(timestamp):   $destinationFirefox wird herunter geladen. `r`n"
-    
-        While( ($JobDownloadFirefox.JobState.ToString() -eq 'Transferring') -or ($JobDownloadFirefox.JobState.ToString() -eq 'Connecting') ){
-    
-        $ProgressBar1.Value = [int](($JobDownloadFirefox.BytesTransferred*100) / $JobDownloadFirefox.BytesTotal)
-        }
-        Complete-BitsTransfer -BitsJob $JobDownloadFirefox
-        
-    
-            If (Test-Path -Path $destinationFirefox){
-                    #Invoke-WebRequest $sourceFirefox -OutFile $destinationFirefox
-                Write-Host "$destinationFirefox downloaded" -ForegroundColor Green
-                $LogWindow.text += "$(timestamp):   $destinationFirefox download abgeschlossen. `r`n"
-            }
-            else {
-                Write-Host "$destinationFirefox not downloaded" -ForegroundColor Green
-                $LogWindow.text += "$(timestamp):   $destinationFirefox download abgbrochen. `r`n"    
-            }
-        }   
-    
-        
-    }
-
 #Erledigt
 function Download7z {
 
@@ -424,7 +386,7 @@ function Download7z {
     $ProgressBar1.Value = [int](($JobDownload7z.BytesTransferred*100) / $JobDownload7z.BytesTotal)
     }
     Complete-BitsTransfer -BitsJob $JobDownload7z
-    
+    Start-Sleep -Seconds 1
 
         If (Test-Path -Path $destination7z){
                 #Invoke-WebRequest $source7z -OutFile $destination7z
@@ -475,7 +437,7 @@ function DownloadGreenshot{
     $ProgressBar1.Value = [int](($JobDownloadGreenshot.BytesTransferred*100) / $JobDownloadGreenshot.BytesTotal)
     }
     Complete-BitsTransfer -BitsJob $JobDownloadGreenshot
-    
+    Start-Sleep -Seconds 1
 
         If (Test-Path -Path $destinationGreenshot){
                                 #Invoke-WebRequest $sourceGreenshot -OutFile $destinationGreenshot
@@ -515,7 +477,7 @@ function DownloadCDburnerXP{
     $ProgressBar1.Value = [int](($JobDownloadCDburnerXP.BytesTransferred*100) / $JobDownloadCDburnerXP.BytesTotal)
     }
     Complete-BitsTransfer -BitsJob $JobDownloadCDburnerXP
-    
+    Start-Sleep -Seconds 1
 
         If (Test-Path -Path $destinationCDburnerXP){
                 #Invoke-WebRequest $sourceCDburnerXP -OutFile $destinationCDburnerXP
@@ -558,7 +520,7 @@ function DownloadO365ProPlusRetail{
     $ProgressBar1.Value = [int](($JobDownloadO365ProPlusRetail.BytesTransferred*100) / $JobDownloadO365ProPlusRetail.BytesTotal)
     }
     Complete-BitsTransfer -BitsJob $JobDownloadO365ProPlusRetail
-    
+    Start-Sleep -Seconds 1
 
         If (Test-Path -Path $destinationO365ProPlusRetail){
                 #Invoke-WebRequest $sourceO365ProPlusRetail -OutFile $destinationO365ProPlusRetail
@@ -596,7 +558,7 @@ function DownloadAcrobatreaderDC{
     $ProgressBar1.Value = [int](($JobDownloadAcrobatreaderDC.BytesTransferred*100) / $JobDownloadAcrobatreaderDC.BytesTotal)
     }
     Complete-BitsTransfer -BitsJob $JobDownloadAcrobatreaderDC
-    
+    Start-Sleep -Seconds 1
 
         If (Test-Path -Path $destinationAcrobatreaderDC){
                 #Invoke-WebRequest $sourceAcrobatreaderDC -OutFile $destinationAcrobatreaderDC
@@ -648,7 +610,7 @@ If (Test-Path -Path $destinationGoogleEarth){
     $ProgressBar1.Value = [int](($JobDownloadGoogleEarth.BytesTransferred*100) / $JobDownloadGoogleEarth.BytesTotal)
     }
     Complete-BitsTransfer -BitsJob $JobDownloadGoogleEarth
-    
+    Start-Sleep -Seconds 1
 
         If (Test-Path -Path $destinationGoogleEarth){
                 #Invoke-WebRequest $sourceGoogleEarth -OutFile $destinationGoogleEarth
@@ -685,7 +647,7 @@ function DownloadGoogleChrome{
     $ProgressBar1.Value = [int](($JobDownloadGoogleChrome.BytesTransferred*100) / $JobDownloadGoogleChrome.BytesTotal)
     }
     Complete-BitsTransfer -BitsJob $JobDownloadGoogleChrome
-    
+    Start-Sleep -Seconds 1
 
         If (Test-Path -Path $destinationGoogleChrome){
                 #Invoke-WebRequest $sourceGoogleChrome -OutFile $destinationGoogleChrome
@@ -726,11 +688,7 @@ function btnDownload {
     if ($CheckBoxRenameComputer.Checked){
         #RenameComputer
     }
- 
-    if ($CheckBoxFirefox.Checked){
-        DownloadFirefox
-    }    
-
+    
     if ($CheckBox7z.Checked){
         Download7z
     }
@@ -809,55 +767,7 @@ Start-Sleep -s 2
 
 
 }
-
-
 #Erledigt
-function RenameComputer {
-    $delimiter = '-'
-    $pwqusers = quser | Select-Object -skip 1
-    $pwGetDate = Get-Date -Format "yyyy"
-    $pwquserfmt = $pwqusers.substring(1,22).Trim() -join ","
-    $pwqyearfmt = $pwGetDate.substring(2,2).Trim() -join ","
-    $NewName = $pwquserfmt + $delimiter + $pwqyearfmt
-    IF($pwquserfmt -eq "Administrator"){
-    $LogWindow.text += "$(timestamp):   $NewName ist kein gültiger Name `r`n"
-    }
-    Else{
-    Rename-Computer -NewName $NewName
-    }
-}
-
-
-function SilentInstallFirefox {
-
-    # Download the installer
-
-
-DownloadFirefox
-
-
-        # Start the installation
-        
-$TestPathFirefox = Test-Path 'HKLM:\SOFTWARE\Mozilla\Firefox'
-
-If($TestPathFirefox -eq "true"){
-    Write-Host "$destinationFirefox ist schon installiert" -ForegroundColor Green
-    $LogWindow.text += "$(timestamp):   $destinationFirefox ist schon installiert. `r`n"
-}
-
-Else{
-    $LogWindow.text += "$(timestamp):   $destinationFirefox installation wird gestartet. `r`n" 
-    Start-Process -FilePath "$destinationFirefox" -ArgumentList "-ms"
-    Start-Sleep -s 15
-    $LogWindow.text += "$(timestamp):   $destinationFirefox installation abgeschlossen. `r`n" 
-}
-
-     
-    
-
-    
-}
-
 function SilentInstall7z {
 
     # Download the installer
@@ -878,7 +788,7 @@ If($TestPath7z -eq "true"){
 Else{
     $LogWindow.text += "$(timestamp):   $destination7z installation wird gestartet. `r`n" 
     msiexec.exe /i $destination7z /qn 
-    Start-Sleep -s 5
+    Start-Sleep -s 35
     $LogWindow.text += "$(timestamp):   $destination7z installation abgeschlossen. `r`n" 
 }
 
@@ -888,6 +798,21 @@ Else{
     
 }
 
+#Erledigt
+function RenameComputer {
+    $delimiter = '-'
+    $pwqusers = quser | Select-Object -skip 1
+    $pwGetDate = Get-Date -Format "yyyy"
+    $pwquserfmt = $pwqusers.substring(1,22).Trim() -join ","
+    $pwqyearfmt = $pwGetDate.substring(2,2).Trim() -join ","
+    $NewName = $pwquserfmt + $delimiter + $pwqyearfmt
+    IF($pwquserfmt -eq "Administrator"){
+    $LogWindow.text += "$(timestamp):   $NewName ist kein gültiger Name `r`n"
+    }
+    Else{
+    Rename-Computer -NewName $NewName
+    }
+}
 
 #Erledigt
 function SilentInstallGreenshot{
@@ -1118,11 +1043,7 @@ function btnStart {
     if ($CheckBoxRenameComputer.Checked){
         RenameComputer
     }
-
-    if ($CheckBoxFirefox.Checked){
-        SilentInstallFirefox
-    }
-
+    
     if ($CheckBox7z.Checked){
         SilentInstall7z
     }
@@ -1171,7 +1092,7 @@ $ProgressBar1.Value = 100
 
 ##### in das Fenster einbinden
 
-$form1.controls.AddRange(@($ProgressBar1,$CheckBoxTeamViewerQS,$CheckBoxRenameComputer,$CheckBoxFirefox,$CheckBox7z,$CheckBoxGreenshot,$CheckBoxCDburnerXP,$CheckBoxO365ProPlusRetail,$CheckBoxAcrobatReaderDC,$CheckBoxBRZclient,$CheckBoxGoogleEarth,$CheckBoxGoogleChrome,$TextBoxPermInstallPath,$TextBoxPermInstallPathBRZclient,$ButtonStart,$ButtonDownload,$LogWindow))
+$form1.controls.AddRange(@($ProgressBar1,$CheckBoxTeamViewerQS,$CheckBoxRenameComputer,$CheckBox7z,$CheckBoxGreenshot,$CheckBoxCDburnerXP,$CheckBoxO365ProPlusRetail,$CheckBoxAcrobatReaderDC,$CheckBoxBRZclient,$CheckBoxGoogleEarth,$CheckBoxGoogleChrome,$TextBoxPermInstallPath,$TextBoxPermInstallPathBRZclient,$ButtonStart,$ButtonDownload,$LogWindow))
 
 $ButtonStart.Add_Click({ btnStart })
 
