@@ -997,15 +997,15 @@ DownloadAcrobatreaderDC
 $TestPathAdobeDC = Test-Path 'HKLM:\SOFTWARE\WOW6432Node\Adobe\Acrobat Reader\DC'
 
 If($TestPathAdobeDC -eq "True"){
-    Write-Host "$destinationAdobeDC ist schon installiert" -ForegroundColor Green
-    $LogWindow.text += "$(timestamp):   $destinationAdobeDC ist schon installiert. `r`n"
+    Write-Host "$destinationAcrobatreaderDC ist schon installiert" -ForegroundColor Green
+    $LogWindow.text += "$(timestamp):   $destinationAcrobatreaderDC ist schon installiert. `r`n"
 }
 Else{
-    $LogWindow.text += "$(timestamp):   $destinationAdobeDC installation wird gestartet. `r`n" 
-    Start-Process -FilePath "$destinationAdobeDC" -ArgumentList "/sPB /rs"
+    $LogWindow.text += "$(timestamp):   $destinationAcrobatreaderDC installation wird gestartet. `r`n" 
+    Start-Process -FilePath "$destinationAcrobatreaderDC" -ArgumentList "/sPB /rs"
     
     Start-Sleep -s 35
-    $LogWindow.text += "$(timestamp):   $destinationAdobeDC installation abgeschlossen. `r`n" 
+    $LogWindow.text += "$(timestamp):   $destinationAcrobatreaderDC installation abgeschlossen. `r`n" 
 }
 
 
